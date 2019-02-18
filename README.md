@@ -8,4 +8,4 @@ The real-time programatic animation system used in all commerical products made 
 The drive consists of 2 physical modules. An ESP32 and an ESP8266. The ESP32 contains the animation system and is responsible for doing the phsyial driving of pixels. The ESP8266 is user progarmmable and runs a script of animations. The ESP8266 sends commands to te ESP32 via the ESP-NOW protcol for realtime execution of commands
 
 # Basic Design & Operation
-https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/basicconfig.jpg
+![Logical Diagram](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/basicconfig.jpg =500x100)
