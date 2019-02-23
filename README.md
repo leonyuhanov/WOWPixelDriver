@@ -59,3 +59,6 @@ Once you have installed the Espressif Flash Download Tools open it and select "E
 
 Upload the Binary, when complete, disconect the Driver Module from your PC, conect it to the panel and power it on. You will see a test patern if you have done everything corect. The test patern scans a singe line in RGB in alternate directions to indicate a complete map
 
+This is some example output for the template:
+
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/ExampleOutput.jpg" width="400" />
