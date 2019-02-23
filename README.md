@@ -62,3 +62,52 @@ Upload the Binary, when complete, disconect the Driver Module from your PC, cone
 This is some example output for the template:
 
 <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/ExampleOutput.jpg" width="400" />
+
+# The Animation API
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/AnimationAPI.jpg" width="800" />
+
+* For now, the API consists of 15 functions
+* The animation system is based around an X,Y address system of a flat 2D BITMAP
+* Colours are generated using the [ColourObject](https://github.com/leonyuhanov/colourObject) API but feel free to use whatever you are used to
+* Colours are represented as a 3 byte array of RGB values
+* All functions are called in real time, however there is a small LAG due to the way the ESPNOW RX/TX system is configured. The driver has a buffer to make sure it can handle huge amounts of real time commands
+
+## clearBitmap()
+Clears the entire frame
+
+## renderLEDs()
+Renders the contents of the current frame to the LEDs
+
+## subtractiveFade(byte fadeByValue)
+Subtracts fadeByValue from each RGB values of each pixel in the current frame
+
+## rangedSubtractiveFade(byte fadeByValue, byte	LeftBound, byte	RightBound, byte TopBound, byte	BottomBound)
+Same as subtractiveFade, but only effects the range sent to the function. the leftBound and RightBound limit your X range and the TopBound and BottomBound limit your Y range
+
+## drawPixel(byte x, byte y, byte* pixelColour)
+Draws a pixel of pixelColour at location X,Y in the current frame
+
+## drawHLine(byte x, byte y, byte width, byte* pixelColour)
+Draws a Horizontal line of pixelColour at location X,Y with a width of width pixels in the current frame
+
+## drawVLine(byte x, byte y, byte height, byte* pixelColour)
+Draws a Vertical line of pixelColour at location X,Y with a height of height pixels in the current frame
+
+## drawLine(byte xStart, byte yStart, byte xEnd, byte yEnd, byte* pixelColour)
+Draws a line of pixelColour starting at location xStart,YStart ending with location xEnd,yEnd in the current frame
+
+## drawCCircle(byte x, byte y, byte radius, byte* pixelColour)
+Draws a circle centred at x,y with a radius of radius pixels with a coloured line of pixelColour. Any pixels out of bounds of the Frame are not drawn
+
+## drawPolly(byte x, byte y, byte radius, unsigned short int rotationAngle, byte N_Points)
+Draws a polygon with N_Points points, rotated by rotationAngle, centred at x,y with a radius of radius pixels with a coloured line of pixelColour. Any pixels out of bounds of the Frame are not drawn. 
+
+## fillArea(byte xStart, byte yStart, byte xEnd, byte yEnd, byte* pixelColour)
+Fills the areay in range with pixelColour
+
+## shiftDown
+## shiftUp
+## shiftLeft
+## shiftRight
+
+
