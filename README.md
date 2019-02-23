@@ -12,3 +12,41 @@ The drive consists of 2 physical, ESP8266 based, modules. The Driver Module cont
 * The Espressif Flash Download Tools from  [Espressif](https://www.espressif.com/en/support/download/other-tools)
 * A spreadhseet app like [Open Office](https://www.openoffice.org/) or [Libre Office](https://www.libreoffice.org/) Calc 
 
+# Setting up your pixel map
+A template spreadsheet is provided [here](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Pixel%20Map%20Template.ods)
+
+* The template is set up for a 17Px Wide X 15px Tall panel
+* The panel starts at the top right, and zig-zags down, left, up, left, down, left etc....
+* The panel has 255 pixels in total
+* Note that the Virtual Bitmap requires a buffer of null pixels at the top bottom, left and right sides of your pixel map
+
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/pixelmap.jpg" width="800" />
+
+The template concatenates each Column cell into a single C++ array. It then concatenates each row into a 2D C++ array. In the example  the array would be set up like this:
+
+Our LED Panel Has:
+
+* 17 ROWS + 2 Null rows on each side
+* 15 Columns + 2 Null columns on each side
+
+```C++
+short int pixelMap[NumberOfRows][NumberOfCollumns];
+```
+
+# Setting up the pixel map configuration code uplaoder
+You will need the following to set up your config file:
+
+* Number of Columns (X range)
+* Number of Rows (Y range)
+* Number of Pixels
+* Bytes per Pixel: 3 for Neopixels/SK6812/WS2812 or 4 for APA102/SK9822
+* The Maskmap Array you created in the template file, you can simply paste the text from Cell from the pixel map template
+
+Open the Uploader.ino file and enter all the details at the top of the file. Then make sure you have the corect board selected and all the settings are as follows:
+
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploadConfig.jpg" width="400" />
+
+Connect your DRIVER module via a USB cable, Open the serial monitor & Uplaod your code. Depending on the size of your pixel map it will take about 30 secods to write the config file. Once complete you will see a message on the console.
+
+# Uploading the driver Binary
+
