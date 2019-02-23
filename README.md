@@ -44,7 +44,7 @@ You will need the following to set up your config file:
 
 Open the Uploader.ino file and enter all the details at the top of the file. Then make sure you have the corect board selected and all the settings are as follows:
 
-<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploadConfig.jpg" width="400" />
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/ESPTool%20Settings_esp8266.jpg" width="400" />
 
 Connect your DRIVER module via a USB cable, Open the serial monitor & Uplaod your code. Depending on the size of your pixel map it will take about 30 secods to write the config file. Once complete you will see a message on the console.
 
