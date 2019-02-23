@@ -105,9 +105,14 @@ Draws a polygon with N_Points points, rotated by rotationAngle, centred at x,y w
 ## fillArea(byte xStart, byte yStart, byte xEnd, byte yEnd, byte* pixelColour)
 Fills the areay in range with pixelColour
 
-## shiftDown
-## shiftUp
-## shiftLeft
-## shiftRight
+## shiftDown(byte wrap,	byte LeftBound, byte RightBound, byte TopBound, byte BottomBound)
+Shifts the selected range from the current frame by 1 pixel DOWN. If wrap=0 pixels are not wrapped around. if wrap=1 the last line is wrapped around the top
 
+## shiftUp(byte wrap,	byte LeftBound, byte RightBound, byte TopBound, byte BottomBound)
+Shifts the selected range from the current frame by 1 pixel UP. If wrap=0 pixels are not wrapped around. if wrap=1 the last line is wrapped around the bottom
 
+## shiftLeft(byte wrap,	byte LeftBound, byte RightBound, byte TopBound, byte BottomBound)
+Shifts the selected range from the current frame by 1 pixel LEFT. If wrap=0 pixels are not wrapped around. if wrap=1 the last line is wrapped around the RIGHT
+
+## shiftRight(byte wrap,	byte LeftBound, byte RightBound, byte TopBound, byte BottomBound)
+Shifts the selected range from the current frame by 1 pixel RIGHT. If wrap=0 pixels are not wrapped around. if wrap=1 the last line is wrapped around the left
