@@ -1,5 +1,4 @@
-# All Code is currently NON Functional
-# For Demonstartion purposes only.
+### All Code is currently NON Functional For Demonstartion purposes only.
 
 # WOWPixelDriver
 A semi-hardware based animation library &amp; pixel driver for addressable LEDs
