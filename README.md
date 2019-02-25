@@ -20,7 +20,7 @@ A template spreadsheet is provided [here](https://github.com/leonyuhanov/WOWPixe
 * The panel has 255 pixels in total
 * Note that the Virtual Bitmap requires a buffer of null pixels at the top bottom, left and right sides of your pixel map
 
-<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/pixelmap.jpg" width="800" />
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/pixelmap.jpg" width="900" />
 
 The template concatenates each Column cell into a single C++ array. It then concatenates each row into a 2D C++ array. In the example  the array would be set up like this:
 
@@ -85,13 +85,13 @@ Connect your DRIVER module via a USB cable, Open the serial monitor & Uplaod you
 
 Once you have installed the Espressif Flash Download Tools open it and select "ESP8266 Download Tool" your settings need to be as follows:
 
-<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/ESPTool%20Settings_esp8266.jpg" width="400" />
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/ESPTool%20Settings_esp8266.jpg" width="600" />
 
 Upload the Binary, when complete, disconect the Driver Module from your PC, conect it to the panel and power it on. You will see a test patern if you have done everything corect. The test patern scans a singe line in RGB in alternate directions to indicate a complete map
 
 This is some example output for the template:
 
-<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/ExampleOutput.jpg" width="400" />
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/ExampleOutput.jpg" width="600" />
 
 # The Animation API
 <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/AnimationAPI.jpg" width="800" />
