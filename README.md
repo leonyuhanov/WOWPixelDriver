@@ -13,7 +13,7 @@ The drive consists of 2 physical, ESP8266 based, modules. The Driver Module cont
 * A spreadhseet app like [Open Office](https://www.openoffice.org/) or [Libre Office](https://www.libreoffice.org/) Calc 
 
 # Setting up your pixel map
-A template spreadsheet is provided [here](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Pixel%20Map%20Template.ods)
+A template spreadsheet is provided [here](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Pixel%20Map%20Template.ods) This doc will focus on a simple matrix, but Im adding more complex example templates into the file as we go
 
 * The template is set up for a 17Px Wide X 15px Tall panel
 * The panel starts at the top right, and zig-zags down, left, up, left, down, left etc....
