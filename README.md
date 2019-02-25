@@ -1,3 +1,6 @@
+# All Code is currently NON Functional
+# For Demonstartion purposes only.
+
 # WOWPixelDriver
 A semi-hardware based animation library &amp; pixel driver for addressable LEDs
 
@@ -81,7 +84,7 @@ const short int maskMap[rows][cols] = {{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-
 ```
 
 
-Open the Uploader.ino file and enter all the details at the top of the file. Then make sure you have the corect board selected and all the settings are as follows:
+Open the [Uploader.ino](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Uploader/Uploader.ino) file and enter all the details at the top of the file. Then make sure you have the corect board selected and all the settings are as follows:
 
 <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploadConfig.jpg" width="400" />
 
