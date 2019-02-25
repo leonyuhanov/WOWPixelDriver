@@ -116,3 +116,80 @@ Shifts the selected range from the current frame by 1 pixel LEFT. If wrap=0 pixe
 
 ## shiftRight(byte wrap,	byte LeftBound, byte RightBound, byte TopBound, byte BottomBound)
 Shifts the selected range from the current frame by 1 pixel RIGHT. If wrap=0 pixels are not wrapped around. if wrap=1 the last line is wrapped around the left
+
+
+# An Animation Loop Template
+
+The following is an example template of a simple animation loop. 
+
+```C++
+void loop()
+{   
+    //Start your animtion timer for a period of 5 seconds
+    startTimer(5000);
+    //Begin your animation
+    yourFancyAnimation();
+}
+void yourFancyAnimation()
+{
+  byte tempColour[3];
+  byte xLoc=cols/2, yLoc=rows/2;
+  byte colourIndex=0;
+  
+  while(true)
+  {
+    //Continue inside this loop untill your timer runs out
+    if(hasTimedOut()){return;}   
+    //Pull a colour from the palete at index "colourIndex" and place it inside the "tempColour" colour array
+    colourObject.getColour(cIndex%colourObject._bandWidth, tempColour);
+    //draw a pixel with colour "tempColour" at position xLoc, YLoc
+    drawPixel(xLoc, yLoc, tempColour);
+    //Render your frame to the LEDs
+    renderLEDs();
+    //Increment the "colourIndex" variable so that your next pass has a new colour value
+    colourIndex++;
+    //Some delay to make sure you dont get Epilepsy  
+    delay(10);
+    //Restart the animation again    
+  }
+}
+```
+
+This example will draw a single pixel n the centre of your pixel mapped LED system, the pixels colour will chagne ever 10ms. The basic operation of any animation is:
+
+* Draw something in the virtual frame
+* Dump that frame to your LEDS so that its visbile
+* Repeat
+
+This Simple template is missing A LOT of the things that make up complex animations. For example blanking the frame or fading the frame gently to give the effect of motion. Here is an example that scans a Vertical Line and leaves a trail of pixels behind it:
+
+```C++
+void trailingVerticalLine()
+{
+  byte tempColour[3];
+  byte xLoc=0, yLoc=0;
+  unsigned short int frameCounter=0;
+  byte colourIndex=0;
+  
+  while(true)
+  {
+    //Continue inside this loop untill your timer runs out
+    if(hasTimedOut()){return;}   
+    //Pull a colour from the palete at index "colourIndex" and place it inside the "tempColour" colour array
+    colourObject.getColour(cIndex%colourObject._bandWidth, tempColour);
+    //draw a vertical line with colour "tempColour" at position (frameCounter % xLoc), YLoc=0;
+    drawBLine(frameCounter%cols, yLoc, tempColour);
+    //Render your frame to the LEDs
+    renderLEDs();
+    //Increment the "colourIndex" variable so that your next pass has a new colour value
+    colourIndex++;
+    //Increment the frameCounter so that our line moves to te next X pixel
+    frameCounter++;
+    //Fade the entire frame by 5
+    subtractiveFade(5);
+    //Delay your next step by 50ms 
+    delay(50);
+    //Restart the animation again    
+  }
+}
+```
