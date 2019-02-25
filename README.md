@@ -216,8 +216,8 @@ void trailingVerticalLine()
     if(hasTimedOut()){return;}   
     //Pull a colour from the palete at index "colourIndex" and place it inside the "tempColour" colour array
     colourObject.getColour(cIndex%colourObject._bandWidth, tempColour);
-    //draw a vertical line with colour "tempColour" at position (frameCounter % xLoc), YLoc=0;
-    drawBLine(frameCounter%cols, yLoc, tempColour);
+    //draw a vertical line of height "rows" with colour "tempColour" at position (frameCounter % xLoc), yLoc=0;
+    drawVLine(frameCounter%cols, yLoc, rows, tempColour);
     //Render your frame to the LEDs
     renderLEDs();
     //Increment the "colourIndex" variable so that your next pass has a new colour value
