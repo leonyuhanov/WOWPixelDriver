@@ -33,7 +33,7 @@ Our LED Panel Has:
 short int pixelMap[NumberOfRows][NumberOfCollumns];
 ```
 
-# Setting up the pixel map configuration code uplaoder
+# Setting up the pixel map configuration code uploader
 You will need the following to set up your config file:
 
 * Number of Columns (X range)
