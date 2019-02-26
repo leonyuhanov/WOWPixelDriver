@@ -52,7 +52,7 @@ You will need the following to set up your config file:
 * Number of Pixels
 * Bytes per Pixel: 3 for Neopixels/SK6812/WS2812 or 4 for APA102/SK9822
 * Default SPI Clock Frequency in (Mhz/1000000) for Driving Clocked Pixels (default is 10 which is 10Mhz)
-* MAC Address of the Controller Modules "WIFI_STA" 
+* MAC Address of the Controller Modules "WIFI_STA" ( Upload [this code](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Utilities/GetControllerMAC.ino) to your controll module to obtain its WIFI_STA Interface MAC address )
 * The Maskmap Array you created in the template file, you can simply paste the text from Cell from the pixel map template
 
 The Uploader code will look something like this for the example we will be working with:
