@@ -174,8 +174,8 @@ The following is an example template of a simple animation loop.
 void loop()
 {   
     //Start a timer for 500 seconds
-	animationSystem.startTimer(500000);
-	//Start your animation
+    animationSystem.startTimer(500000);
+    //Start your animation
     rainbowSwipe(2);
 }
 void rainbowSwipe(byte colourIncrement)
@@ -188,20 +188,22 @@ void rainbowSwipe(byte colourIncrement)
   while(true)
   {
     //Check if the animation has timed out
-	if(animationSystem.hasTimedOut()){return;}
+    if(animationSystem.hasTimedOut()){return;}
     //Place a colour into "tempColour" using index "cIndex" from the dynColObject palete
     dynColObject.getColour(cIndex%dynColObject._bandWidth, tempColour);
-    //Draw a Vertical line of "animationSystem.rows" height at location ("scanCnt%animationSystem.cols", 0) in your frame, with colour "tempColour"
-	animationSystem.drawVLine(scanCnt%animationSystem.cols, 0, animationSystem.rows, tempColour);
+    //Draw a Vertical line of "animationSystem.rows" height 
+    // at location ("scanCnt%animationSystem.cols", 0) in your frame, 
+    // with colour "tempColour"
+    animationSystem.drawVLine(scanCnt%animationSystem.cols, 0, animationSystem.rows, tempColour);
     //Render your FRAME to the LEDs
-	animationSystem.renderLEDs();
-	//Increment the colour indexer "cIndex" by "colourIncrement"
+    animationSystem.renderLEDs();
+    //Increment the colour indexer "cIndex" by "colourIncrement"
     cIndex += colourIncrement;
-	//Indrecment the X modifier fr the next loop by 1
+    //Indrecment the X modifier fr the next loop by 1
     scanCnt++;
-	//Fade your entire frame by a value of 5
+    //Fade your entire frame by a value of 5
     animationSystem.subtractiveFade(5);
-	//Delay for 50ms
+    //Delay for 50ms
     delay(50); 
   }
 }
