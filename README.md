@@ -162,75 +162,47 @@ Shifts the selected range from the current frame by 1 pixel RIGHT. If wrap=0 pix
 # An Animation Loop Template
 
 The following is an example template of a simple animation loop. 
+* The animations real time steps are inside the function "rainbowSwipe(byte colourIncrement)"
+* The animation begins by clearing the frame
+* Grabing a colour from the 1st index
+* Draw a Vertical line at an indexed X,0 location with height ROWS, using the above colour
+* Render the frame to the LEDS
+* Fade the Frame by a value of 5
+* increment the colour index and the X indexer, wait then repeat untill the timer runs out
 
 ```C++
 void loop()
 {   
-    //Start your animtion timer for a period of 5 seconds
-    startTimer(5000);
-    //Begin your animation
-    yourFancyAnimation();
+    //Start a timer for 500 seconds
+	animationSystem.startTimer(500000);
+	//Start your animation
+    rainbowSwipe(2);
 }
-void yourFancyAnimation()
+void rainbowSwipe(byte colourIncrement)
 {
-  byte tempColour[3];
-  byte xLoc=cols/2, yLoc=rows/2;
-  byte colourIndex=0;
+  unsigned short int scanCnt = 0, cIndex=0;
+
+  //Clear the animation FRAME
+  nimationSystem.clearBitmap();
   
   while(true)
   {
-    //Continue inside this loop untill your timer runs out
-    if(hasTimedOut()){return;}   
-    //Pull a colour from the palete at index "colourIndex" and place it inside the "tempColour" colour array
-    colourObject.getColour(cIndex%colourObject._bandWidth, tempColour);
-    //draw a pixel with colour "tempColour" at position xLoc, YLoc
-    drawPixel(xLoc, yLoc, tempColour);
-    //Render your frame to the LEDs
-    renderLEDs();
-    //Increment the "colourIndex" variable so that your next pass has a new colour value
-    colourIndex++;
-    //Some delay to make sure you dont get Epilepsy  
-    delay(10);
-    //Restart the animation again    
-  }
-}
-```
-
-This example will draw a single pixel n the centre of your pixel mapped LED system, the pixels colour will chagne ever 10ms. The basic operation of any animation is:
-
-* Draw something in the virtual frame
-* Dump that frame to your LEDS so that its visbile
-* Repeat
-
-This Simple template is missing A LOT of the things that make up complex animations. For example blanking the frame or fading the frame gently to give the effect of motion. Here is an example that scans a Vertical Line and leaves a trail of pixels behind it:
-
-```C++
-void trailingVerticalLine()
-{
-  byte tempColour[3];
-  byte xLoc=0, yLoc=0;
-  unsigned short int frameCounter=0;
-  byte colourIndex=0;
-  
-  while(true)
-  {
-    //Continue inside this loop untill your timer runs out
-    if(hasTimedOut()){return;}   
-    //Pull a colour from the palete at index "colourIndex" and place it inside the "tempColour" colour array
-    colourObject.getColour(cIndex%colourObject._bandWidth, tempColour);
-    //draw a vertical line of height "rows" with colour "tempColour" at position (frameCounter % xLoc), yLoc=0;
-    drawVLine(frameCounter%cols, yLoc, rows, tempColour);
-    //Render your frame to the LEDs
-    renderLEDs();
-    //Increment the "colourIndex" variable so that your next pass has a new colour value
-    colourIndex++;
-    //Increment the frameCounter so that our line moves to te next X pixel
-    frameCounter++;
-    //Fade the entire frame by 5
-    subtractiveFade(5);
-    //Delay your next step by 50ms 
-    delay(50);
-    //Restart the animation again    
+    //Check if the animation has timed out
+	if(animationSystem.hasTimedOut()){return;}
+    //Place a colour into "tempColour" using index "cIndex" from the dynColObject palete
+    dynColObject.getColour(cIndex%dynColObject._bandWidth, tempColour);
+    //Draw a Vertical line of "animationSystem.rows" height at location ("scanCnt%animationSystem.cols", 0) in your frame, with colour "tempColour"
+	animationSystem.drawVLine(scanCnt%animationSystem.cols, 0, animationSystem.rows, tempColour);
+    //Render your FRAME to the LEDs
+	animationSystem.renderLEDs();
+	//Increment the colour indexer "cIndex" by "colourIncrement"
+    cIndex += colourIncrement;
+	//Indrecment the X modifier fr the next loop by 1
+    scanCnt++;
+	//Fade your entire frame by a value of 5
+    animationSystem.subtractiveFade(5);
+	//Delay for 50ms
+    delay(50); 
   }
 }
 ```
