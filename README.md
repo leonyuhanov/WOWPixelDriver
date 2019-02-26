@@ -51,6 +51,8 @@ You will need the following to set up your config file:
 * Number of Rows (Y range)
 * Number of Pixels
 * Bytes per Pixel: 3 for Neopixels/SK6812/WS2812 or 4 for APA102/SK9822
+* Default SPI Clock Frequency in (Mhz/1000000) for Driving Clocked Pixels (default is 10 which is 10Mhz)
+* MAC Address of the Controller Modules "WIFI_STA" 
 * The Maskmap Array you created in the template file, you can simply paste the text from Cell from the pixel map template
 
 The Uploader code will look something like this for the example we will be working with:
@@ -62,6 +64,10 @@ const short int bytesPerLed = 4;
 //rows =  is the total number of Rows(Y Axis) in your LED set up, this is usualy the number of pixels TALL+2(1 NUll line at the top and bottom)
 //cols =  is the total number of Columns(X Axis) in your LED set up, this is usualy the number of pixels WIDE+2(1 NUll line at the LEFT and RIGHT)
 const short int rows = 17, cols = 19;
+//SPI Frequcny for clocked Pixels
+const short int maxSPIFrequency = 10;
+//MAC Address of Controller modules "WIFI_STA"
+const short int controllerMACAddress[6] = {0x00,0x00,0x00,0x00,0x00,0x00};
 //This is the array you create in the template spreadsheet above
 const short int maskMap[rows][cols] = {{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
 {-1,240,239,210,209,180,179,150,149,120,119,90,89,60,59,30,29,0,-1},
@@ -81,16 +87,17 @@ const short int maskMap[rows][cols] = {{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-
 {-1,254,225,224,195,194,165,164,135,134,105,104,75,74,45,44,15,14,-1},
 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}};
 ```
-
-
 Open the [Uploader.ino](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Uploader/Uploader.ino) file and enter all the details at the top of the file. Then make sure you have the corect board selected and all the settings are as follows:
 
 <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploadConfig.jpg" width="400" />
 
-Connect your DRIVER module via a USB cable, Open the serial monitor & Uplaod your code. Depending on the size of your pixel map it will take about 30 secods to write the config file. Once complete you will see a message on the console.
+Connect your DRIVER module via a USB cable, Open the serial monitor & Upload your code.
+Depending on the size of your pixel map it will take about 30 secods to write the config file.
+Once complete you will see a message like this on the console...
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploaderOutput.jpg" width="400" />
 
 # Uploading the driver Binary
-* The driver Binary is the entire precompiled system
+* The driver Binary is the entire precompiled system that will be physicaly delivered with each physical driver module
 * It is locked to the physical ESP Chip ID of the module you receive
 * It will NOT work on any other ESP8266 module
 
