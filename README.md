@@ -94,7 +94,7 @@ Open the [Uploader.ino](https://github.com/leonyuhanov/WOWPixelDriver/blob/maste
 Connect your DRIVER module via a USB cable, Open the serial monitor & Upload your code.
 Depending on the size of your pixel map it will take about 30 secods to write the config file.
 Once complete you will see a message like this on the console...
-<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploaderOutput.jpg" width="400" />
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploaderOutput.jpg" width="600" />
 
 # Uploading the driver Binary
 * The driver Binary is the entire precompiled system that will be physicaly delivered with each physical driver module
