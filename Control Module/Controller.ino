@@ -28,13 +28,13 @@ const byte maxValue = 64;
 //tempColour stores an RGB colour value to be used in your system
 byte tempColour[3] = {0,0,0};
 /*
-	The following sets up the colourObject for details of this API check https://github.com/leonyuhanov/colourObject
-		-colourList is an array of RGB colours in your palete Below is a standard ROYGBIV rainbow width a trailing BLACK
-		-you can create your own colourList array with as many or few colours
-		-dynColObject is the colour object that will generate all your colours its initiated with:
-			-maxValue setting the upper bounds of the RGB rainbow for power limitation
-			-9 the number of UNIQUE RGB values in the colourList
-			-colourList an array of RGB colours
+  The following sets up the colourObject for details of this API check https://github.com/leonyuhanov/colourObject
+    -colourList is an array of RGB colours in your palete Below is a standard ROYGBIV rainbow width a trailing BLACK
+    -you can create your own colourList array with as many or few colours
+    -dynColObject is the colour object that will generate all your colours its initiated with:
+      -maxValue setting the upper bounds of the RGB rainbow for power limitation
+      -9 the number of UNIQUE RGB values in the colourList
+      -colourList an array of RGB colours
 */
 char colourList[9*3]={maxValue,0,0, maxValue,maxValue,0, 0,maxValue,0, 0,maxValue,maxValue, 0,0,maxValue, maxValue,0,maxValue, maxValue,maxValue,maxValue, maxValue,0,0, 0,0,0};
 colourObject dynColObject(maxValue, 9, colourList);
@@ -47,6 +47,8 @@ WOWAnimationObject animationSystem;
 
 void setup()
 {
+  Serial.begin(115200);
+  Serial.printf("\r\n\r\n");
   //Initiate the animation system passing your pixel maps Width(cols) and Height(rows)
   animationSystem.init(rows, cols);
   //DO NOT CHANGE ANYTHING IN THE REST OF THE SET UP FUNCTION
@@ -65,10 +67,25 @@ void setup()
 
 void loop()
 {   
-    //Start a timer for 500 seconds
-	animationSystem.startTimer(500000);
-	//Start your animation
-    rainbowSwipe(2);
+  /*
+  const byte numberOfPoints = 4;
+  unsigned short int envelopePoints[numberOfPoints] = {0,10,20,5};
+  unsigned short int ticks[numberOfPoints]={30,30,30,30};
+  unsigned short int scanCnt = 0;
+  animationSystem.initEnvelope(envelopePoints, ticks, 4);
+  while(true)
+  {
+    Serial.printf("\r\n%d", animationSystem.getEnvelope(scanCnt));
+    scanCnt = (scanCnt+1)%animationSystem.envelopeBandwidth;
+    delay(40);
+  }
+  */
+
+  //Start a timer for 500 seconds
+  animationSystem.startTimer(500000);
+  //Start your animation
+  rainbowSwipe(2);
+
 }
 
 void rainbowSwipe(byte colourIncrement)
@@ -76,25 +93,25 @@ void rainbowSwipe(byte colourIncrement)
   unsigned short int scanCnt = 0, cIndex=0;
 
   //Clear the animation FRAME
-  nimationSystem.clearBitmap();
+  animationSystem.clearBitmap();
   
   while(true)
   {
     //Check if the animation has timed out
-	if(animationSystem.hasTimedOut()){return;}
+  if(animationSystem.hasTimedOut()){return;}
     //Place a colour into "tempColour" using index "cIndex" from the dynColObject palete
     dynColObject.getColour(cIndex%dynColObject._bandWidth, tempColour);
     //Draw a Vertical line of "animationSystem.rows" height at location ("scanCnt%animationSystem.cols", 0) in your frame, with colour "tempColour"
-	animationSystem.drawVLine(scanCnt%animationSystem.cols, 0, animationSystem.rows, tempColour);
+  animationSystem.drawVLine(scanCnt%animationSystem.cols, 0, animationSystem.rows, tempColour);
     //Render your FRAME to the LEDs
-	animationSystem.renderLEDs();
-	//Increment the colour indexer "cIndex" by "colourIncrement"
+  animationSystem.renderLEDs();
+  //Increment the colour indexer "cIndex" by "colourIncrement"
     cIndex += colourIncrement;
-	//Indrecment the X modifier fr the next loop by 1
+  //Indrecment the X modifier fr the next loop by 1
     scanCnt++;
-	//Fade your entire frame by a value of 5
+  //Fade your entire frame by a value of 5
     animationSystem.subtractiveFade(5);
-	//Delay for 50ms
+  //Delay for 50ms
     delay(50); 
   }
 }

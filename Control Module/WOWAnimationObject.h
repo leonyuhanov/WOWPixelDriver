@@ -14,10 +14,10 @@ class WOWAnimationObject
     byte hasTimedOut();
     void startAckTimeout();
     byte hasAckTimedOut();
+    void initEnvelope(unsigned short int* points, unsigned short int* ticks, byte numberOfPoints); 
+    unsigned short int getEnvelope(unsigned short int tickCounter);
     int getWave(float sinCounter, float minWave, float maxWave);
     void clearDataBlock();
-    void clearESPNowDataBlock();
-    void transmit();
     void transmitImediate();
     
     void clearBitmap();
@@ -41,15 +41,17 @@ class WOWAnimationObject
     byte tempColour[3];
     unsigned long timeData[3];
     byte blockSize;
-    byte ESPNOWBlockSize;
-    byte stackIndex;
     byte ack;
     byte remoteDevice[6];
+    float** envelopePoints;
+    byte numberOfEnvelopPoints;
+    unsigned short int envelopeBandwidth;
     byte* dataBlock;
-    byte* espNowDataBlock;
     
     private:
     unsigned long _ackTimer[3];
+    unsigned short int _counter, _envelopeIndex, _envelopeCounter;
+    float _blockGradient;
 };
 
 #endif
