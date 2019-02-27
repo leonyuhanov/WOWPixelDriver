@@ -179,12 +179,12 @@ There are also some uitily fucntions that are designed to help with things like 
   * intervalTickCounter += 0.01 generates medium frequency sinusodal wave
   * intervalTickCounter += 0.1 generates high frequency sinusodal wave
 * Utelising the [EnvelopeGenerator](https://github.com/leonyuhanov/EnvelopeGenerator) object:
-* void initEnvelope(unsigned short int* points, unsigned short int* ticks, byte numberOfPoints)
-  * Dynamic envelope generator
-  * Pass "numberOfPoints" number of elemnts via the array of "unsigned short int points"
-  * Pass "numberOfPoints" number of durationsPerPoint via the array of "unsigned short int ticks"
-  * "points" an array of Envelope points, the output will wrap around from the last point to the 1st automaticly
-  * "ticks" an array of time ticks PER point. This essentialy gives you a way to scale each point and the speed/gradient of the curve
+  * void initEnvelope(unsigned short int* points, unsigned short int* ticks, byte numberOfPoints)
+   * Dynamic envelope generator
+   * Pass "numberOfPoints" number of elemnts via the array of "unsigned short int points"
+   * Pass "numberOfPoints" number of durationsPerPoint via the array of "unsigned short int ticks"
+   * "points" an array of Envelope points, the output will wrap around from the last point to the 1st automaticly
+   * "ticks" an array of time ticks PER point. This essentialy gives you a way to scale each point and the speed/gradient of the curve
   ```C++
   envelopeGenerator envelopeOne;
   const byte numberOfPoints = 4;
@@ -193,9 +193,9 @@ There are also some uitily fucntions that are designed to help with things like 
   unsigned short int ticks[numberOfPoints] = {30, 30, 30, 30};
   envelopeOne.initEnvelope(points, ticks, numberOfPoints);
   ```
-* unsigned short int getEnvelope(unsigned short int frameCounter)
-  * Generates your curve based on your point list and time blocks using "frameCounter" as the time index
-  * "envelopeOne.envelopeBandwidth" can be used to limit your frame counter and keep it in bounds of your dynamic frame ticks
+  * unsigned short int getEnvelope(unsigned short int frameCounter)
+   * Generates your curve based on your point list and time blocks using "frameCounter" as the time index
+   * "envelopeOne.envelopeBandwidth" can be used to limit your frame counter and keep it in bounds of your dynamic frame ticks
   ```C++
   while(true)
   {
