@@ -165,7 +165,20 @@ Shifts the selected range from the current frame by 1 pixel LEFT. If wrap=0 pixe
 ## shiftRight(byte wrap,	byte LeftBound, byte RightBound, byte TopBound, byte BottomBound)
 Shifts the selected range from the current frame by 1 pixel RIGHT. If wrap=0 pixels are not wrapped around. if wrap=1 the last line is wrapped around the left
 
-
+## Utility Functions
+There are also some uitily fucntions that are designed to help with things like timing, generating modulation, etc...
+* void startTimer(unsigned long timeInMilliseconds)
+  * 1000ms is 1 second
+  * Starts an internal time ticker taht runs for "timeInMilliseconds" milliseconds
+* byte hasTimedOut()
+  * returns 1 if the "timeInMilliseconds" has elapsed or 0 if not
+* int getWave(float intervalTickCounter, float minimumValue, float maximumValue)
+  * generates a floored and cield sinusodal wave of integers from "minimumValue" to "maximumValue"
+  * you can dynamicly flow through the wave by sending in a float "intervalTickCounter" and incrementing it
+  *  intervalTickCounter += 0.001 generates very low frequency sinusodal wave
+  *  intervalTickCounter += 0.01 generates medium frequency sinusodal wave
+  *  intervalTickCounter += 0.1 generates high frequency sinusodal wave
+    
 # An Animation Loop Template
 
 The following is an example template of a simple animation loop. 
