@@ -166,7 +166,7 @@ Shifts the selected range from the current frame by 1 pixel LEFT. If wrap=0 pixe
 Shifts the selected range from the current frame by 1 pixel RIGHT. If wrap=0 pixels are not wrapped around. if wrap=1 the last line is wrapped around the left
 
 ## Utility Functions
-There are also some uitily fucntions that are designed to help with things like timing, generating modulation, etc...
+There are also some helper fucntions that are designed to help with things like timing, generating modulation, etc...
 * void startTimer(unsigned long timeInMilliseconds)
   * 1000ms is 1 second
   * Starts an internal time ticker taht runs for "timeInMilliseconds" milliseconds
@@ -178,11 +178,11 @@ There are also some uitily fucntions that are designed to help with things like 
   * intervalTickCounter += 0.001 generates very low frequency sinusodal wave
   * intervalTickCounter += 0.01 generates medium frequency sinusodal wave
   * intervalTickCounter += 0.1 generates high frequency sinusodal wave
-* Utelising the [EnvelopeGenerator](https://github.com/leonyuhanov/EnvelopeGenerator) object:
-  * void initEnvelope(unsigned short int* points, unsigned short int* ticks, byte numberOfPoints)
+* Using the [EnvelopeGenerator](https://github.com/leonyuhanov/EnvelopeGenerator) object:
+   * void initEnvelope(unsigned short int* points, unsigned short int* ticks, byte numberOfPoints)
    * Dynamic envelope generator
    * Pass "numberOfPoints" number of elemnts via the array of "unsigned short int points"
-   * Pass "numberOfPoints" number of durationsPerPoint via the array of "unsigned short int ticks"
+   * Pass "numberOfPoints" number of "Duration Ticks Per Point" via the array of "unsigned short int ticks"
    * "points" an array of Envelope points, the output will wrap around from the last point to the 1st automaticly
    * "ticks" an array of time ticks PER point. This essentialy gives you a way to scale each point and the speed/gradient of the curve
   ```C++
@@ -193,7 +193,7 @@ There are also some uitily fucntions that are designed to help with things like 
   unsigned short int ticks[numberOfPoints] = {30, 30, 30, 30};
   envelopeOne.initEnvelope(points, ticks, numberOfPoints);
   ```
-  * unsigned short int getEnvelope(unsigned short int frameCounter)
+   * unsigned short int getEnvelope(unsigned short int frameCounter)
    * Generates your curve based on your point list and time blocks using "frameCounter" as the time index
    * "envelopeOne.envelopeBandwidth" can be used to limit your frame counter and keep it in bounds of your dynamic frame ticks
   ```C++
@@ -203,7 +203,7 @@ There are also some uitily fucntions that are designed to help with things like 
    frameCounter = (frameCounter+1)%envelopeOne.envelopeBandwidth;
   }
   ```
-  The above generates this:
+  The above generates this curve:
   
   <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/envelopOutput.jpg" width="300" />
   
