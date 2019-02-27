@@ -229,7 +229,7 @@ void rainbowSwipe(byte colourIncrement)
   unsigned short int scanCnt = 0, cIndex=0;
 
   //Clear the animation FRAME
-  nimationSystem.clearBitmap();
+  animationSystem.clearBitmap();
   
   while(true)
   {
