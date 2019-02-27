@@ -17,7 +17,7 @@ void envelopeGenerator::initEnvelope(unsigned short int* points, unsigned short 
   _envelopeIndex=0;
   envelopeBandwidth=0;
   
-  //set up Envelop Points
+  //set up Envelope Points
   for(_counter=0; _counter<numberOfEnvelopPoints; _counter++)
   {
     envelopePoints[_counter][0] = points[_counter];
@@ -38,26 +38,23 @@ void envelopeGenerator::initEnvelope(unsigned short int* points, unsigned short 
 
 unsigned short int envelopeGenerator::getEnvelope(unsigned short int tickCounter)
 {
-  //grab block ID
   _envelopeCounter = envelopePoints[0][2];
-  for(_counter=0; _counter<numberOfEnvelopPoints; _counter++)
+  _counter=0;
+  while(_counter<numberOfEnvelopPoints)
   {
-    if(tickCounter>=0 && tickCounter<_envelopeCounter)
+    if(_counter==0 && tickCounter>=0 && tickCounter<_envelopeCounter)
     {
       _envelopeIndex = _counter;
-      _counter=numberOfEnvelopPoints;
+      break;
     }
-    else if (tickCounter>=_envelopeCounter && tickCounter<_envelopeCounter+envelopePoints[_counter+1][2])
+    else if(tickCounter>=envelopePoints[_counter][2] && tickCounter<_envelopeCounter)
     {
-      _envelopeIndex = _counter+1;
-      _counter=numberOfEnvelopPoints;
+      _envelopeIndex = _counter++;
+      break;
     }
-    else
-    {
-      _envelopeCounter += envelopePoints[_counter][2];
-    }
+    _counter++;
+    _envelopeCounter += envelopePoints[_counter][2];
   }
-
   //grab gradient
   if(_envelopeIndex==0)
   {
@@ -80,7 +77,6 @@ unsigned short int envelopeGenerator::getEnvelope(unsigned short int tickCounter
       _envelopeCounter+=envelopePoints[_counter][2];
       _counter++;
     }
-    
     _blockGradient = (((envelopePoints[_envelopeIndex][1] - envelopePoints[_envelopeIndex][0]) / envelopePoints[_envelopeIndex][2]) * (tickCounter-_envelopeCounter));
     if(_blockGradient<0)
     {
