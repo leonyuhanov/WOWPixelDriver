@@ -175,10 +175,36 @@ There are also some uitily fucntions that are designed to help with things like 
 * int getWave(float intervalTickCounter, float minimumValue, float maximumValue)
   * generates a floored and cield sinusodal wave of integers from "minimumValue" to "maximumValue"
   * you can dynamicly flow through the wave by sending in a float "intervalTickCounter" and incrementing it
-  *  intervalTickCounter += 0.001 generates very low frequency sinusodal wave
-  *  intervalTickCounter += 0.01 generates medium frequency sinusodal wave
-  *  intervalTickCounter += 0.1 generates high frequency sinusodal wave
-    
+  * intervalTickCounter += 0.001 generates very low frequency sinusodal wave
+  * intervalTickCounter += 0.01 generates medium frequency sinusodal wave
+  * intervalTickCounter += 0.1 generates high frequency sinusodal wave
+* void initEnvelope(unsigned short int* points, unsigned short int* ticks, byte numberOfPoints)
+  * Dynamic envelope generator
+  * Pass "numberOfPoints" number of elemnts via the array of "unsigned short int points"
+  * Pass "numberOfPoints" number of durationsPerPoint via the array of "unsigned short int ticks"
+  * "points" an array of Envelope points, the output will wrap around from the last point to the 1st automaticly
+  * "ticks" an array of time ticks PER point. This essentialy gives you a way to scale each point and the speed/gradient of the curve
+  ```C++
+  const byte numberOfPoints = 4;
+  unsigned short int frameCounter=0;
+  unsigned short int points[numberOfPoints] = {0,10,20,5};
+  unsigned short int ticks[numberOfPoints] = {30, 30, 30, 30};
+  animationSystem.initEnvelope(points, ticks, numberOfPoints);
+  ```
+* unsigned short int getEnvelope(unsigned short int frameCounter)
+  * Generates your curve based on your point list and time blocks using "frameCounter" as the time index
+  * "animationSystem.envelopeBandwidth" can be used to limit your frame counter and keep it in bounds of your dynamic frame ticks
+  ```C++
+  while(true)
+  {
+   System.printf("\r\n%d", animationSystem.getEnvelope(frameCounter));
+   frameCounter = (frameCounter+1)%animationSystem.envelopeBandwidth;
+  }
+  ```
+  The above generates this:
+  
+  <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/envelopOutput.jpg" width="400" />
+  
 # An Animation Loop Template
 
 The following is an example template of a simple animation loop. 
