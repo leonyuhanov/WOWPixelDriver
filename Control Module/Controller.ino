@@ -19,6 +19,7 @@ void initVariant()
 #include <ESP8266WiFi.h>
 #include "colourObject.h"
 #include "WOWAnimationObject.h"
+#include "envelopeGenerator.h"
 #define WIFI_CHANNEL 1
 
 //Enter your pixel maps Width(cols) and Height(rows)
@@ -44,6 +45,7 @@ float waveIndex = 0;
 
 //Create an instance of the WOWAnimationObject
 WOWAnimationObject animationSystem;
+envelopeGenerator envelopeOne;
 
 void setup()
 {
@@ -67,24 +69,26 @@ void setup()
 
 void loop()
 {   
-  /*
+  
   const byte numberOfPoints = 4;
   unsigned short int envelopePoints[numberOfPoints] = {0,10,20,5};
   unsigned short int ticks[numberOfPoints]={30,30,30,30};
   unsigned short int scanCnt = 0;
-  animationSystem.initEnvelope(envelopePoints, ticks, 4);
+  envelopeOne.initEnvelope(envelopePoints, ticks, 4);
+  
   while(true)
   {
-    Serial.printf("\r\n%d", animationSystem.getEnvelope(scanCnt));
-    scanCnt = (scanCnt+1)%animationSystem.envelopeBandwidth;
+    Serial.printf("\r\n%d", envelopeOne.getEnvelope(scanCnt));
+    scanCnt = (scanCnt+1)%envelopeOne.envelopeBandwidth;
     delay(40);
   }
-  */
-
+  
+  /*
   //Start a timer for 500 seconds
   animationSystem.startTimer(500000);
   //Start your animation
   rainbowSwipe(2);
+  */
 
 }
 

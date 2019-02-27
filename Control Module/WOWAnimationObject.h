@@ -1,6 +1,7 @@
 #ifndef WOWAnimationObject_h
 #define WOWAnimationObject_h
 #include "Arduino.h"
+
 extern "C" {
   #include <espnow.h>
 }
@@ -14,8 +15,6 @@ class WOWAnimationObject
     byte hasTimedOut();
     void startAckTimeout();
     byte hasAckTimedOut();
-    void initEnvelope(unsigned short int* points, unsigned short int* ticks, byte numberOfPoints); 
-    unsigned short int getEnvelope(unsigned short int tickCounter);
     int getWave(float sinCounter, float minWave, float maxWave);
     void clearDataBlock();
     void transmitImediate();
@@ -43,15 +42,10 @@ class WOWAnimationObject
     byte blockSize;
     byte ack;
     byte remoteDevice[6];
-    float** envelopePoints;
-    byte numberOfEnvelopPoints;
-    unsigned short int envelopeBandwidth;
     byte* dataBlock;
     
     private:
     unsigned long _ackTimer[3];
-    unsigned short int _counter, _envelopeIndex, _envelopeCounter;
-    float _blockGradient;
 };
 
 #endif

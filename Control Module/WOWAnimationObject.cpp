@@ -1,4 +1,5 @@
 #include "WOWAnimationObject.h"
+
 extern "C" {
   #include <espnow.h>
 }
@@ -14,14 +15,15 @@ void WOWAnimationObject::init(byte rows_y, byte cols_x)
     cols = cols_x;
     blockSize = 10;
     ack=1;
+    //Set up Driver MAC Address
     remoteDevice[0] = 0x84;
     remoteDevice[1] = 0xF3;
     remoteDevice[2] = 0xEB;
     remoteDevice[3] = 0xB3;
     remoteDevice[4] = 0x62;
     remoteDevice[5] = 0xC7;
+    //Set up Data Blocl
     dataBlock = new byte[blockSize];
-
     clearDataBlock();
     //Default timeout for an ESPNOW ACK response
     _ackTimer[2] = 2000; //default response is about 500max
@@ -55,99 +57,11 @@ byte WOWAnimationObject::hasAckTimedOut()
   return 0;
 }
 
-void WOWAnimationObject::initEnvelope(unsigned short int* points, unsigned short int* ticks, byte numberOfPoints)
-{
-  //Init Envelops in memory
-  numberOfEnvelopPoints = numberOfPoints;
-  envelopePoints = new float*[numberOfEnvelopPoints];
-  for(_counter=0; _counter<numberOfEnvelopPoints; _counter++)
-  {
-    envelopePoints[_counter] = new float[3];
-  }
-  _envelopeIndex=0;
-  envelopeBandwidth=0;
-  
-  //set up Envelop Points
-  for(_counter=0; _counter<numberOfEnvelopPoints; _counter++)
-  {
-    envelopePoints[_counter][0] = points[_counter];
-    if(_counter+1==numberOfEnvelopPoints)
-    {
-      envelopePoints[_counter][1] = points[0];
-    }
-    else
-    {
-      envelopePoints[_counter][1] = points[_counter+1];
-    }
-    envelopePoints[_counter][2] = ticks[_counter];
-    envelopeBandwidth += ticks[_counter];
-  }
-  //Reset the ticker to 0
-  _envelopeIndex = 0;
-}
-
 int WOWAnimationObject::getWave(float sinCounter, float minWave, float maxWave)
 {
   return abs( (sin(sinCounter)*(maxWave+1-minWave)))+minWave ;
 }
 
-unsigned short int WOWAnimationObject::getEnvelope(unsigned short int tickCounter)
-{
-  //grab block ID
-  _envelopeCounter = envelopePoints[0][2];
-  for(_counter=0; _counter<numberOfEnvelopPoints; _counter++)
-  {
-    if(tickCounter>=0 && tickCounter<_envelopeCounter)
-    {
-      _envelopeIndex = _counter;
-      _counter=numberOfEnvelopPoints;
-    }
-    else if (tickCounter>=_envelopeCounter && tickCounter<_envelopeCounter+envelopePoints[_counter+1][2])
-    {
-      _envelopeIndex = _counter+1;
-      _counter=numberOfEnvelopPoints;
-    }
-    else
-    {
-      _envelopeCounter += envelopePoints[_counter][2];
-    }
-  }
-
-  //grab gradient
-  if(_envelopeIndex==0)
-  {
-    _blockGradient = ((envelopePoints[_envelopeIndex][1] - envelopePoints[_envelopeIndex][0]) / envelopePoints[_envelopeIndex][2])*tickCounter;
-    if(_blockGradient<0)
-    {
-      return envelopePoints[_envelopeIndex][0] - abs(_blockGradient);
-    }
-    else
-    {
-      return envelopePoints[_envelopeIndex][0] + abs(_blockGradient);
-    }
-  }
-  else
-  {
-    _envelopeCounter=0;
-    _counter=0;
-    while(_counter<_envelopeIndex)
-    {
-      _envelopeCounter+=envelopePoints[_counter][2];
-      _counter++;
-    }
-    
-    _blockGradient = (((envelopePoints[_envelopeIndex][1] - envelopePoints[_envelopeIndex][0]) / envelopePoints[_envelopeIndex][2]) * (tickCounter-_envelopeCounter));
-    if(_blockGradient<0)
-    {
-      return envelopePoints[_envelopeIndex][0] - abs(_blockGradient);
-    }
-    else
-    {
-      return envelopePoints[_envelopeIndex][0] + abs(_blockGradient);
-    }
-  }
-
-}
 
 void WOWAnimationObject::clearDataBlock()
 {
