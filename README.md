@@ -1,13 +1,13 @@
 
 
-# WOWPixelDriver
-A semi-hardware based animation library &amp; pixel driver for addressable LEDs
+# WOW Pixel Driver, LED Mapping & Animation System
+A complete solution for pixel mapping, animation and driving for addressable LEDs
 
 # Why?
-The real-time programatic animation system used in all commerical products made by [Elec Dash Tron](https://www.instagram.com/wow_elec_tron/) is Private IP. I want to make the animation system accesible to the public without having to distrubute the source code publicly. I want to also restrict usage to specific hardware modules
+The real-time programatic animation system used in all commerical products made by [Elec Dash Tron](https://www.instagram.com/wow_elec_tron/) is Private IP. I want to make the entire system accesible to the public without having to distrubute the source code publicly. I want to also restrict usage to specific hardware modules
 
 # How does it work
-The drive consists of 2 physical, ESP8266 based, modules. The Driver Module contains the animation system and is responsible for doing the physical driving of pixels. The Control module is user programmable and runs a script of animations. The Control module comunicates via the ESP-NOW protcol for realtime execution of commands. 
+The system consists of 2 physical, ESP8266 based, modules. The Driver Module contains the pixel mapping, animation system and LED Driver. The Control module is user programmable and runs your script of animations. The Control module comunicates via the ESP-NOW protocol for realtime execution of commands. 
 
 # What pixels are supported
 The driver uses the ESP8266 SPI port to drive both Clocked and Unclocked Chipsets:
@@ -16,7 +16,24 @@ The driver uses the ESP8266 SPI port to drive both Clocked and Unclocked Chipset
 * WS2812 5050
 * WS2812B 5050
 * WS2812 2020
-* SK6812 5050, 3535 & 2427(With Opaque Lense) New models of the 2427 chipset is NOT suported
+* SK6812 5050, 3535 & 2427(With Opaque Lense)(The CLEAR Lense model is unsupported)
+
+# Some limitations
+* The maximum pixel map size is 255x255 bytes
+* I recomend the maximum amount of pixels to be under 1000 for best perfomance. There are A LOT of variables to consider here such as:
+  * Power use
+  * Your soldering Skils
+  * Cable and conection types
+  * Environmental noise
+  * specific requirements for specific pixel chipsets
+* The Control module uses the ESPNOW protocol to comunicate with the Driver module. I have tested this to be pretty good at about 50 meters line of sight with a clean RF environment. WHen you start introducing RF noise, walls, pockets, cases etc... your range wil be smaller
+* A lot of the functions use BYTE (uint_8) for input vars. Please be mindfull of any overun maths you need to do for your code 
+
+# Basic Workflow
+ * Create a pixel map
+ * Upload it to the Driver module
+ * Upload the Driver Binary to the driver module
+ * Create your animations and upload them to your Controller module
 
 # Prerequisite Software
 * The Arduino IDE via [Arduino](https://www.arduino.cc/)
@@ -24,36 +41,31 @@ The driver uses the ESP8266 SPI port to drive both Clocked and Unclocked Chipset
 * A spreadhseet app like [Open Office](https://www.openoffice.org/) or [Libre Office](https://www.libreoffice.org/) Calc 
 
 # Setting up your pixel map
-A template spreadsheet is provided [here](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Pixel%20Map%20Template.ods) This doc will focus on a simple matrix, but Im adding more complex example templates into the file as we go
+A template spreadsheet is provided [here](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Pixel%20Map%20Template.ods) This doc will focus on a simple matrix, but Im adding more complex examples into the file as we go
 
 * The template is set up for a 17Px Wide X 15px Tall panel
-* The panel starts at the top right, and zig-zags down, left, up, left, down, left etc....
+* The pixels start at the top righ and are conected in a zig-zags configuration(down, left, up, left, down, left etc....)
 * The panel has 255 pixels in total
-* Note that the Virtual Bitmap requires a buffer of null pixels at the top bottom, left and right sides of your pixel map
+* The pixel map uses "-1" as an indicator of a NULL pixel. A Null pixel is simply a space where a pixel doesnt exist. This becomes very obvious when your layout is complex
+* The pixel map requires a buffer of these null pixels at the top, bottom, left and right sides of your pixel map. These buffer lines can be used as off-screen animation helpers
 
 <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/pixelmap.jpg" width="900" />
 
-The template concatenates each Column cell into a single C++ array. It then concatenates each row into a 2D C++ array. In the example  the array would be set up like this:
+The template spreadsheet concatenates each Column cell into a single C++ array representing that ROW. It then concatenates each ROW into a C++ array. Once done, COPY the text in the cell (marked in the above image as "Your Pixel Map array") this text is the full string you will need in the next section for the pixelMap array
 
-Our LED Panel Has:
+# Setting up the configuration code uploader utility
+The uploader, located he [Uploader.ino](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Uploader/Uploader.ino) contains all the config cvariable you need to fill out and is responsible for writing this to the Driver modules SPIFFS. Open the file in the Arduino IDE and fill out the following:
 
-* 17 ROWS + 2 Null rows on each side
-* 15 Columns + 2 Null columns on each side
-
-```C++
-short int pixelMap[NumberOfRows][NumberOfCollumns];
-```
-
-# Setting up the pixel map configuration code uploader
-You will need the following to set up your config file:
-
-* Number of Columns (X range)
-* Number of Rows (Y range)
-* Number of Pixels
-* Bytes per Pixel: 3 for Neopixels/SK6812/WS2812 or 4 for APA102/SK9822
-* Default SPI Clock Frequency in (Mhz/1000000) for Driving Clocked Pixels (default is 10 which is 10Mhz)
-* MAC Address of the Controller Modules "WIFI_STA" ( Upload [this code](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Utilities/GetControllerMAC.ino) to your controll module to obtain its WIFI_STA Interface MAC address )
-* The Maskmap Array you created in the template file, you can simply paste the text from Cell from the pixel map template
+* cols: Number of Columns (X range)
+* rows: Number of Rows (Y range)
+* numLeds: Number of Pixels in your layout
+* bytesPerLed: Set to 3 for Neopixels/SK6812/WS2812 or 4 for APA102/SK9822
+* maxSPIFrequency: The Default SPI Clock Frequency in (Mhz/1000000) for Driving Clocked Pixels (default is 10 which is 10Mhz). If you are using Neopixels leave this set to 10.
+  * In reality your pixel layout may require a much lower drive speed. When starting out set this to 1(for 1Mhz) and ramp it up as you go
+* controllerMACAddress: The MAC Address of the Controller Modules "WIFI_STA"
+  * You will be provided with the MAC address 
+  * If you want ot use your own ESP8266 module you will need to identify its WIFI_STA address. Use [this code](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Utilities/GetControllerMAC.ino) it will print the MAC address to the serial console and halt
+* maskMap: The pixel map array you created in the template file, you can simply paste the text from Cell from the pixel map template
 
 The Uploader code will look something like this for the example we will be working with:
 ```C++
@@ -87,38 +99,49 @@ const short int maskMap[rows][cols] = {{-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-
 {-1,254,225,224,195,194,165,164,135,134,105,104,75,74,45,44,15,14,-1},
 {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}};
 ```
-Open the [Uploader.ino](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Uploader/Uploader.ino) file and enter all the details at the top of the file. Then make sure you have the corect board selected and all the settings are as follows:
+Once you have filled out all the details, check atht your IDE is set up for the corect module and settings. The most important things to set are:
+* Board Type: LOLIN(WEMOS) D1 R2 & MINI
+* CPU Frequency: 160Mhz
+* Flash Size: 4M (3M SPIFFS)
+* Erase Flash: ALL FLASH CONTENTS
 
-<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploadConfig.jpg" width="400" />
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploadConfig.jpg" width="200" />
 
 Connect your DRIVER module via a USB cable, Open the serial monitor & Upload your code.
-Depending on the size of your pixel map it will take about 30 secods to write the config file.
 Once complete you will see a message like this on the console...
-<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploaderOutput.jpg" width="600" />
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploaderOutput.jpg" width="500" />
 
 # Uploading the driver Binary
-* The driver Binary is the entire precompiled system that will be physicaly delivered with each physical driver module
-* It is locked to the physical ESP Chip ID of the module you receive
-* It will NOT work on any other ESP8266 module
+* The driver Binary is the entire precompiled system that will be physicaly delivered with each physical driver module OR emailed to you upon purchase
+* It is locked to the physical ESP Chip ID & MAC Address of the module you receive
+* It will NOT work on any other module
 
-Once you have installed the Espressif Flash Download Tools open it and select "ESP8266 Download Tool" your settings need to be as follows:
+Open the "Espressif Flash Download Tools" and select "ESP8266 Download Tool" your settings need to be as follows:
+* Tick the 1st line and browse to the location of the BINARY file you receievd. On the RIGHT enter 0 as the location where this binary will be burned to
+* Crystal Freq: 40M
+* SPI SPeed: 80Mhz
+* SPI Mode: QIO
+* Flash Size: 32Mbit
+* Tick "DO NOT CHANGE BINARY"
+* Select the port your Driver mofule is conected to and set upload speed to 921600
 
 <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/ESPTool%20Settings_esp8266.jpg" width="600" />
 
-Upload the Binary, when complete, disconect the Driver Module from your PC, conect it to the panel and power it on. You will see a test patern if you have done everything corect. The test patern scans a singe line in RGB in alternate directions to indicate a complete map
+Click START to Upload the Binary, when complete, disconect the Driver Module from your PC, conect it to the panel and power it on. You will see a test patern if you have done everything corect. The test patern scans a singe line in RGB in alternate directions to indicate a complete map. Conecting the Driver module to your USB Port and opening the Console will help troubleshoot any issues. This is an exmaple of what you will see on the console if everythign is set up corectly:
 
-This is some example output for the template:
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/ExampleOutput.jpg" width="500" />
 
-<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/ExampleOutput.jpg" width="600" />
+At this point your Driver is good to go. Unless you change your pixel map or other configuration settings, you wont need to touch it again.
 
 # The Animation API
 <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/AnimationAPI.jpg" width="800" />
 
-* For now, the API consists of 15 functions
-* The animation system is based around an X,Y address system of a flat 2D BITMAP
+* For now, the API consists of 15 core draw functions
+* The animation system draws inside a FRAME of X+2,Y+2 size as configured in your map
+* Nothing is output to the LEDs unless you call the renderLEDS() function
 * Colours are generated using the [ColourObject](https://github.com/leonyuhanov/colourObject) API but feel free to use whatever you are used to
 * Colours are represented as a 3 byte array of RGB values
-* All functions are called in real time, however there is a small LAG due to the way the ESPNOW RX/TX system is configured. The driver has a buffer to make sure it can handle huge amounts of real time commands
+* All functions are called in real time, the average roundtrip time is maxed at around 500 micro seconds per command 
 
 ## clearBitmap()
 Clears the entire frame
@@ -130,13 +153,13 @@ Renders the contents of the current frame to the LEDs
 Subtracts fadeByValue from each RGB values of each pixel in the current frame
 
 ## rangedSubtractiveFade(byte fadeByValue, byte	LeftBound, byte	RightBound, byte TopBound, byte	BottomBound)
-Same as subtractiveFade, but only effects the range sent to the function. the leftBound and RightBound limit your X range and the TopBound and BottomBound limit your Y range
+Same as subtractiveFade, but only effects the range sent to the function. The leftBound and RightBound limit your X range and the TopBound and BottomBound limit your Y range
 
 ## drawPixel(byte x, byte y, byte* pixelColour)
 Draws a pixel of pixelColour at location X,Y in the current frame
 
 ## drawHLine(byte x, byte y, byte width, byte* pixelColour)
-Draws a Horizontal line of pixelColour at location X,Y with a width of width pixels in the current frame
+Draws a Horizontal line of pixelColour at location X,Y with a width of "width" pixels in the current frame
 
 ## drawVLine(byte x, byte y, byte height, byte* pixelColour)
 Draws a Vertical line of pixelColour at location X,Y with a height of height pixels in the current frame
