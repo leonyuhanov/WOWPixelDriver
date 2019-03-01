@@ -241,6 +241,16 @@ The following is an example template of a simple animation loop.
 * Fade the Frame by a value of 5
 * increment the colour index and the X indexer, wait then repeat untill the timer runs out
 
+You need to make sure the following 2 vars are ste properly:
+* localDevice: the MAC address of your Controller module
+  * You will be provided with the MAC address
+  * If you want ot use your own ESP8266 module you will need to identify its WIFI_STA address. Use [this code](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Utilities/GetControllerMAC.ino) it will print the MAC address to the serial console and halt
+* animationSystem.remoteDevice: located inside the [WOWAnimationObject.cpp](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Control%20Module/WOWAnimationObject.cpp) file in the function oid WOWAnimationObject::init(byte rows_y, byte cols_x)
+  * You will be provided with the MAC address of your Driver Module
+  * It will also print out on the consoe of your Driver module boot up
+  
+Once you have that set up, upload the [Control Module](https://github.com/leonyuhanov/WOWPixelDriver/tree/master/Control%20Module) Code to your Controler module
+
 ```C++
 void loop()
 {   
