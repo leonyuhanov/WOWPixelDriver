@@ -10,7 +10,7 @@ class WOWAnimationObject
 {
   public:
     WOWAnimationObject();
-    void init(byte rows_y, byte cols_x);
+    void init(byte rows_y, byte cols_x, byte* driverMACAddress);
     void startTimer(unsigned long durationInMillis);
     byte hasTimedOut();
     void startAckTimeout();

@@ -2,19 +2,17 @@
   Control Module 
   This file will conatin all your real time animations
   
-  Remote DRIVER MAC Address        84:F3:EB:B3:62:C7
-  THIS Controllers MAC ADdress     84:F3:EB:B3:65:CE
-
 */
 extern "C" {
   #include "user_interface.h"
   #include <espnow.h>
 }
-byte localDevice[] = {0x84,0xF3,0xEB,0xB3,0x65,0xCE};
+byte controllerMAC[] = {0x84,0xF3,0xEB,0xB3,0x5E,0x7D};
+byte driverMAC[] = {0x84,0xF3,0xEB,0xB3,0x5E,0x7D};
 void initVariant()
 {
    wifi_set_opmode(STATIONAP_MODE);
-   wifi_set_macaddr(STATION_IF, &localDevice[0]);
+   wifi_set_macaddr(STATION_IF, &controllerMAC[0]);
 }
 #include <ESP8266WiFi.h>
 #include "colourObject.h"
@@ -45,7 +43,7 @@ float waveIndex = 0;
 
 //Create an instance of the WOWAnimationObject
 WOWAnimationObject animationSystem;
-envelopeGenerator envelopeOne;
+envelopeGenerator envelopeObjectOne, envelopeObjectTwo, envelopeColour;
 
 void setup()
 {
@@ -70,26 +68,14 @@ void setup()
 void loop()
 {   
   
-  const byte numberOfPoints = 4;
-  unsigned short int envelopePoints[numberOfPoints] = {0,10,20,5};
-  unsigned short int ticks[numberOfPoints]={30,30,30,30};
-  unsigned short int scanCnt = 0;
-  envelopeOne.initEnvelope(envelopePoints, ticks, 4);
-  
-  while(true)
-  {
-    Serial.printf("\r\n%d", envelopeOne.getEnvelope(scanCnt));
-    scanCnt = (scanCnt+1)%envelopeOne.envelopeBandwidth;
-    delay(40);
-  }
-  
-  /*
   //Start a timer for 500 seconds
   animationSystem.startTimer(500000);
   //Start your animation
   rainbowSwipe(2);
-  */
 
+  //animationSystem.startTimer(5000000);
+  //dualPop(1);
+  
 }
 
 void rainbowSwipe(byte colourIncrement)
@@ -114,8 +100,40 @@ void rainbowSwipe(byte colourIncrement)
   //Indrecment the X modifier fr the next loop by 1
     scanCnt++;
   //Fade your entire frame by a value of 5
-    animationSystem.subtractiveFade(5);
+    animationSystem.subtractiveFade(3);
   //Delay for 50ms
-    delay(50); 
+    delay(20); 
+  }
+}
+
+void dualPop(byte colourIncrement)
+{
+  unsigned short int scanCnt = 0, cIndex=0;
+  unsigned short int objectEnvelopes[5] = {0, 8, 5, 3, 1};
+  unsigned short int objectTwoEnvelopes[5] = {8, 5, 3, 2, 0};
+  unsigned short int colourEnvelopes[2] = {dynColObject._bandWidth/4, dynColObject._bandWidth/2};
+  unsigned short int objectTicks[5] = {20,20,20,10,20};
+  unsigned short int colourTicks[2] = {100,50};
+   
+  envelopeObjectOne.initEnvelope(objectEnvelopes, objectTicks, 5);
+  envelopeObjectTwo.initEnvelope(objectTwoEnvelopes, objectTicks, 5);
+  envelopeColour.initEnvelope(colourEnvelopes, colourTicks, 2);
+  
+  //Clear the animation FRAME
+  animationSystem.clearBitmap();
+  
+  while(true)
+  {
+  //Check if the animation has timed out
+  if(animationSystem.hasTimedOut()){return;}
+  dynColObject.getColour( envelopeColour.getEnvelope(cIndex%envelopeColour.envelopeBandwidth)%dynColObject._bandWidth, tempColour) ;
+  animationSystem.drawCCircle(6, rows/2, envelopeObjectOne.getEnvelope(scanCnt%envelopeObjectOne.envelopeBandwidth), tempColour);
+  animationSystem.drawCCircle(12, rows/2, envelopeObjectTwo.getEnvelope(scanCnt%envelopeObjectTwo.envelopeBandwidth), tempColour);
+  animationSystem.renderLEDs();
+  cIndex += colourIncrement;
+  scanCnt++;
+  animationSystem.subtractiveFade(6);
+  
+  delay(10); 
   }
 }

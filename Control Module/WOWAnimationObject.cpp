@@ -9,19 +9,19 @@ WOWAnimationObject::WOWAnimationObject()
 
 }
 
-void WOWAnimationObject::init(byte rows_y, byte cols_x)
+void WOWAnimationObject::init(byte rows_y, byte cols_x, byte* driverMACAddress)
 {
     rows = rows_y;
     cols = cols_x;
     blockSize = 10;
     ack=1;
     //Set up Driver MAC Address
-    remoteDevice[0] = 0x84;
-    remoteDevice[1] = 0xF3;
-    remoteDevice[2] = 0xEB;
-    remoteDevice[3] = 0xB3;
-    remoteDevice[4] = 0x62;
-    remoteDevice[5] = 0xC7;
+    remoteDevice[0] = driverMACAddress[0];
+    remoteDevice[1] = driverMACAddress[1];
+    remoteDevice[2] = driverMACAddress[2];
+    remoteDevice[3] = driverMACAddress[3];
+    remoteDevice[4] = driverMACAddress[4];
+    remoteDevice[5] = driverMACAddress[5];
     //Set up Data Blocl
     dataBlock = new byte[blockSize];
     clearDataBlock();
