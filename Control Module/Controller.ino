@@ -7,8 +7,8 @@ extern "C" {
   #include "user_interface.h"
   #include <espnow.h>
 }
-byte controllerMAC[] = {0x84,0xF3,0xEB,0xB3,0x5E,0x7D};
-byte driverMAC[] = {0x84,0xF3,0xEB,0xB3,0x5E,0x7D};
+byte controllerMAC[] = {0x84,0xF3,0xEB,0xB3,0x56,0xDD};
+byte driverMAC[] = {0x84,0xF3,0xEB,0xB3,0x61,0x46};
 void initVariant()
 {
    wifi_set_opmode(STATIONAP_MODE);
@@ -50,7 +50,7 @@ void setup()
   Serial.begin(115200);
   Serial.printf("\r\n\r\n");
   //Initiate the animation system passing your pixel maps Width(cols) and Height(rows)
-  animationSystem.init(rows, cols);
+  animationSystem.init(rows, cols, driverMAC);
   //DO NOT CHANGE ANYTHING IN THE REST OF THE SET UP FUNCTION
   //Set up ESPNOW
   WiFi.mode(WIFI_STA);
