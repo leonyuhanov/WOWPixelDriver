@@ -67,7 +67,7 @@ The uploader, located he [Uploader.ino](https://github.com/leonyuhanov/WOWPixelD
 * controllerMACAddress: The MAC Address of the Controller Modules "WIFI_STA"
   * You will be provided with the MAC address 
   * If you want ot use your own ESP8266 module you will need to identify its WIFI_STA address. Use [this code](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Utilities/GetControllerMAC.ino) it will print the MAC address to the serial console and halt
-* maskMap: The pixel map array you created in the template file, you can simply paste the text from Cell from the pixel map template
+* maskMap: The pixel map array you created in the template file, you can simply paste the text from the pixel map template
 
 The Uploader code will look something like this for the example we will be working with:
 ```C++
@@ -111,6 +111,7 @@ Once you have filled out all the details, check atht your IDE is set up for the 
 
 Connect your DRIVER module via a USB cable, Open the serial monitor & Upload your code.
 Once complete you will see a message like this on the console...
+
 <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploaderOutput.jpg" width="500" />
 
 # Uploading the driver Binary
