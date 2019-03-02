@@ -48,6 +48,8 @@ A template spreadsheet is provided [here](https://github.com/leonyuhanov/WOWPixe
 * The panel has 255 pixels in total
 * The pixel map uses "-1" as an indicator of a NULL pixel. A Null pixel is simply a space where a pixel doesnt exist. This becomes very obvious when your layout is complex
 * The pixel map requires a buffer of these null pixels at the top, bottom, left and right sides of your pixel map. These buffer lines can be used as off-screen animation helpers
+* Each cell inside your map MUST be filled in. A cell is iether a physical address/order of a pixel or "-1" menaing a blank space or null pixel. If you have ANY cells that are empty, the driver will NOT boot
+* You can reuse a pixels physical address in  multiple cells, but note that any pixel render meant for that location will be rendered to each location mapped to that address. I can not see any instance where this is usefull, but its definitely something you CAN do 
 
 <img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/pixelmap.jpg" width="900" />
 
