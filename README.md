@@ -56,7 +56,7 @@ A template spreadsheet is provided [here](https://github.com/leonyuhanov/WOWPixe
 The template spreadsheet concatenates each Column cell into a single C++ array representing that ROW. It then concatenates each ROW into a C++ array. Once done, COPY the text in the cell (marked in the above image as "Your Pixel Map array") this text is the full string you will need in the next section for the pixelMap array
 
 # Setting up the configuration code uploader utility
-The uploader, located he [Uploader.ino](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Uploader/Uploader.ino) contains all the config cvariable you need to fill out and is responsible for writing this to the Driver modules SPIFFS. Open the file in the Arduino IDE and fill out the following:
+The uploader, located he [Uploader.ino](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Uploader/Uploader.ino) contains all the config variable you need to fill out and is responsible for writing this to the Driver modules SPIFFS. Open the file in the Arduino IDE and fill out the following:
 
 * cols: Number of Columns (X range)
 * rows: Number of Rows (Y range)
