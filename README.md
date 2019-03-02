@@ -64,9 +64,11 @@ The uploader, located he [Uploader.ino](https://github.com/leonyuhanov/WOWPixelD
 * bytesPerLed: Set to 3 for Neopixels/SK6812/WS2812 or 4 for APA102/SK9822
 * maxSPIFrequency: The Default SPI Clock Frequency in (Mhz/1000000) for Driving Clocked Pixels (default is 10 which is 10Mhz). If you are using Neopixels leave this set to 10.
   * In reality your pixel layout may require a much lower drive speed. When starting out set this to 1(for 1Mhz) and ramp it up as you go
-* controllerMACAddress: The MAC Address of the Controller Modules "WIFI_STA"
+* controllerMAC: The MAC Address of the Controller Modules "WIFI_STA"
   * You will be provided with the MAC address 
   * If you want ot use your own ESP8266 module you will need to identify its WIFI_STA address. Use [this code](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Utilities/GetControllerMAC.ino) it will print the MAC address to the serial console and halt
+* driverMAC: The MAC Address of the Driver modules "WIFI_STA"
+  * You will be provided with the MAC address 
 * maskMap: The pixel map array you created in the template file, you can simply paste the text from the pixel map template
 
 The Uploader code will look something like this for the example we will be working with:
@@ -245,11 +247,11 @@ The following is an example template of a simple animation loop.
 * increment the colour index and the X indexer, wait then repeat untill the timer runs out
 
 You need to make sure the following 2 vars are ste properly:
-* localDevice: the MAC address of your Controller module
+* controllerMAC: the MAC address of your Controller module
   * You will be provided with the MAC address
   * If you want ot use your own ESP8266 module you will need to identify its WIFI_STA address. Use [this code](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Utilities/GetControllerMAC.ino) it will print the MAC address to the serial console and halt
-* animationSystem.remoteDevice: located inside the [WOWAnimationObject.cpp](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Control%20Module/WOWAnimationObject.cpp) file in the function "void WOWAnimationObject::init(byte rows_y, byte cols_x)"
-  * You will be provided with the MAC address of your Driver Module
+* driverMAC: the MAC Address of the Driver Modules "WIFI_STA"
+  * You will be provided with the MAC address
   * It will also print out on the consoe of your Driver module boot up
   
 Once you have that set up, upload the [Control Module](https://github.com/leonyuhanov/WOWPixelDriver/tree/master/Control%20Module) Code to your Controler module
