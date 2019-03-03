@@ -7,7 +7,7 @@ A complete solution for pixel mapping, animation and driving for addressable LED
 The real-time programatic animation system used in all commerical products made by [Elec Dash Tron](https://www.instagram.com/wow_elec_tron/) is Private IP. I want to make the entire system accesible to the public without having to distrubute the source code publicly. I want to also restrict usage to specific hardware modules
 
 # How does it work
-The system consists of 2 physical, ESP8266 based, modules. The Driver Module contains the pixel mapping, animation system and LED Driver. The Control module is user programmable and runs your script of animations. The Control module comunicates via the ESP-NOW protocol for realtime execution of commands. 
+The system consists of 2 physical, ESP8266 based, modules. The Driver Module (LABELED D) contains the pixel mapping, animation system and LED Driver. The Control module (LABELED C) is user programmable and runs your script of animations. The Control module comunicates via the ESP-NOW protocol for realtime execution of commands. 
 
 # What pixels are supported
 The driver uses the ESP8266 SPI port to drive both Clocked and Unclocked Chipsets:
@@ -39,6 +39,17 @@ The driver uses the ESP8266 SPI port to drive both Clocked and Unclocked Chipset
 * The Arduino IDE via [Arduino](https://www.arduino.cc/)
 * The Espressif Flash Download Tools from  [Espressif](https://www.espressif.com/en/support/download/other-tools)
 * A spreadhseet app like [Open Office](https://www.openoffice.org/) or [Libre Office](https://www.libreoffice.org/) Calc 
+
+# PIN OUTs of the 4PIN JST MALE port on the DRIVER Module
+  * Red: +5v
+  * Yellow: Clock Pin (only active for APA102/SK9822 pixels)
+  * Green: Data Pin (active for all pixels)
+  * Blue: Ground
+  
+The Driver module will come with 2 FEMALE JSP cables for you to use depending on the type of pixel you wish to use. Both conect to the same 4 Pin MALE conector
+  * A 3pin cable for driving WS2812 & SK6812 Pixels
+  * A 4pin cable for driving APA102 & SK9822 Pixels
+  
 
 # Setting up your pixel map
 A template spreadsheet is provided [here](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Pixel%20Map%20Template.ods) This doc will focus on a simple matrix, but Im adding more complex examples into the file as we go
