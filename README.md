@@ -37,6 +37,7 @@ The driver uses the ESP8266 SPI port to drive both Clocked and Unclocked Chipset
 
 # Prerequisite Software
 * The Arduino IDE via [Arduino](https://www.arduino.cc/)
+  * With the ESP8266 Development Library, install instructions from [here](https://github.com/esp8266/Arduino)  
 * The Espressif Flash Download Tools from  [Espressif](https://www.espressif.com/en/support/download/other-tools)
 * A spreadhseet app like [Open Office](https://www.openoffice.org/) or [Libre Office](https://www.libreoffice.org/) Calc 
 
