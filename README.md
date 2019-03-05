@@ -43,11 +43,11 @@ The driver uses the ESP8266 SPI port to drive both Clocked and Unclocked Chipset
 
 # PIN OUTs of the 4PIN JST MALE port on the DRIVER Module
   * Red: +5v
-  * Yellow: Clock Pin (only active for APA102/SK9822 pixels)
-  * Green: Data Pin (active for all pixels)
+  * Yellow: Clock Pin (only active for APA102/SK9822 pixels) Level shifted to 5+ Logic Level via the [SN74HCT245N](http://www.ti.com/lit/ds/symlink/sn74hct245.pdf) 
+  * Green: Data Pin (active for all pixels) Level shifted to 5+ Logic Level via the [SN74HCT245N](http://www.ti.com/lit/ds/symlink/sn74hct245.pdf) 
   * Blue: Ground
   
-The Driver module will come with 2 FEMALE JSP cables for you to use depending on the type of pixel you wish to use. Both conect to the same 4 Pin MALE conector
+The Driver module will come with 2 FEMALE JST cables for you to use depending on the type of pixel you wish to use. Both conect to the same 4 Pin MALE conector
   * A 3pin cable for driving WS2812 & SK6812 Pixels
   * A 4pin cable for driving APA102 & SK9822 Pixels
   
