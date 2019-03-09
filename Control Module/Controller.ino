@@ -1,6 +1,6 @@
 /*
   Control Module 
-  This file will conatin all your real time animations
+  This file will contain all your real time animations
   
 */
 extern "C" {
@@ -22,7 +22,7 @@ void initVariant()
 
 //Enter your pixel maps Width(cols) and Height(rows)
 const byte rows = 17, cols = 19;
-//maxValue sets the physical maximunm brightness of the colour system to limit power usage. 64 is 25% brightness. 255 is the maximum and NOT recomended
+//maxValue sets the physical maximunm brightness of the colour system to limit power usage. 64 is 25% brightness. 255 is the maximum and NOT recommended
 const byte maxValue = 64;
 //tempColour stores an RGB colour value to be used in your system
 byte tempColour[3] = {0,0,0};
@@ -30,7 +30,7 @@ byte tempColour[3] = {0,0,0};
   The following sets up the colourObject for details of this API check https://github.com/leonyuhanov/colourObject
     -colourList is an array of RGB colours in your palete Below is a standard ROYGBIV rainbow width a trailing BLACK
     -you can create your own colourList array with as many or few colours
-    -dynColObject is the colour object that will generate all your colours its initiated with:
+    -dynColObject is the colour object that will generate all your colours it's initiated with:
       -maxValue setting the upper bounds of the RGB rainbow for power limitation
       -9 the number of UNIQUE RGB values in the colourList
       -colourList an array of RGB colours
@@ -89,7 +89,7 @@ void rainbowSwipe(byte colourIncrement)
   {
     //Check if the animation has timed out
   if(animationSystem.hasTimedOut()){return;}
-    //Place a colour into "tempColour" using index "cIndex" from the dynColObject palete
+    //Place a colour into "tempColour" using index "cIndex" from the dynColObject palette
     dynColObject.getColour(cIndex%dynColObject._bandWidth, tempColour);
     //Draw a Vertical line of "animationSystem.rows" height at location ("scanCnt%animationSystem.cols", 0) in your frame, with colour "tempColour"
   animationSystem.drawVLine(scanCnt%animationSystem.cols, 0, animationSystem.rows, tempColour);
@@ -97,7 +97,7 @@ void rainbowSwipe(byte colourIncrement)
   animationSystem.renderLEDs();
   //Increment the colour indexer "cIndex" by "colourIncrement"
     cIndex += colourIncrement;
-  //Indrecment the X modifier fr the next loop by 1
+  //Increment the X modifier for the next loop by 1
     scanCnt++;
   //Fade your entire frame by a value of 5
     animationSystem.subtractiveFade(3);
