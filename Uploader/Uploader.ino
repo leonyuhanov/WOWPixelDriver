@@ -19,7 +19,7 @@ void setup()
   Serial.printf("\r\n\tWIFI_STA MAC\t");
   Serial.println(WiFi.macAddress());
   Serial.printf("\r\n\tESP Chip ID\t%d", ESP.getChipId());
-  Serial.printf("\r\n\tFormating SPIFFS...");
+  Serial.printf("\r\n\tFormatting SPIFFS...");
   SPIFFS.begin();
   Serial.printf("DONE!");   
 

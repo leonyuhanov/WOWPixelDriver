@@ -7,7 +7,7 @@ envelopeGenerator::envelopeGenerator()
 
 void envelopeGenerator::initEnvelope(unsigned short int* points, unsigned short int* ticks, byte numberOfPoints)
 {
-  //Init Envelops in memory
+  //Init Envelopes in memory
   numberOfEnvelopPoints = numberOfPoints;
   envelopePoints = new float*[numberOfEnvelopPoints];
   for(_counter=0; _counter<numberOfEnvelopPoints; _counter++)
