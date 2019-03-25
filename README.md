@@ -53,7 +53,7 @@ The Driver module will come with 2 FEMALE JST cables for you to use depending on
   * A 4pin cable for driving APA102 & SK9822 Pixels
   
 # Connecting the modules to your computers USB port
-You will need a USB to Micro USB cable to conect both modules for programming via the Arduino IDE. The Wemos D1 Mino boards included in this kit use the CH341 USB to Serial chip. Drivers are located [HERE](https://github.com/himalayanelixir/Arduino_USB_Drivers) for Most platforms
+You will need a USB to Micro USB cable to conect both modules for programming via the Arduino IDE. The Wemos D1 Mini boards included in this kit use the CH341 USB to Serial chip. Drivers are located [HERE](https://github.com/himalayanelixir/Arduino_USB_Drivers) for Most platforms
 
 # Powering your LEDs (on the driver module)
 The Driver module comes with a USB cable with a power switch, you will need to conect this to a power sources with enough current to drive your LED count. A powerbank with a 2A output is a great start. DO NOT CONECT YOUR LEDS TO THE DRIVER PANEL UNLESS YOU ARE DELIVERITNG POWER VIA THIS USB CABLE or you risk blowing up the 500ma power regulator on the driver board
