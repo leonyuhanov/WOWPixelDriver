@@ -37,7 +37,8 @@ The driver uses the ESP8266 SPI port to drive both Clocked and Unclocked Chipset
 
 # Prerequisite Software
 * The Arduino IDE via [Arduino](https://www.arduino.cc/)
-  * With the ESP8266 Development Library, install instructions from [here](https://github.com/esp8266/Arduino)  
+  * With the ESP8266 Development Library, install instructions from [here](https://github.com/esp8266/Arduino)
+  * You may also need the driver used to conect the USB to Serial IC on the Wemos mouldes located [HERE](https://github.com/himalayanelixir/Arduino_USB_Drivers) for Most platforms
 * The Espressif Flash Download Tools from  [Espressif](https://www.espressif.com/en/support/download/other-tools)
 * A spreadhseet app like [Open Office](https://www.openoffice.org/) or [Libre Office](https://www.libreoffice.org/) Calc 
 
