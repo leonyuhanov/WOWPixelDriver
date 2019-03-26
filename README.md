@@ -272,7 +272,9 @@ You need to make sure the following 2 vars are set properly:
   * You will be provided with the MAC address
   * It will also print out on the console of your Driver module boot up
   
-Once you have that set up, upload the [Control Module](https://github.com/leonyuhanov/WOWPixelDriver/tree/master/Control%20Module) Code to your Controller module
+Once you have that set up, upload the [Control Module](https://github.com/leonyuhanov/WOWPixelDriver/tree/master/Control%20Module) Code to your Controller module using the same UPLOAD CONFIG details as picture:
+
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/UploadConfig.jpg" width="300" />
 
 ```C++
 void loop()
