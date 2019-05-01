@@ -58,6 +58,10 @@ You will need a USB to Micro USB cable to conect both modules for programming vi
 # Powering your LEDs (on the driver module)
 The Driver module comes with a USB cable with a power switch, you will need to conect this to a power sources with enough current to drive your LED count. A powerbank with a 2A output is a great start. DO NOT CONECT YOUR LEDS TO THE DRIVER MODULE UNLESS YOU ARE DELIVERING POWER VIA THIS USB CABLE or you risk blowing up the 500mA power regulator on the driver board
 
+If you are powering your pixel array with a seperate power supply, and have LOTS of pixels, you can remove/not use the BLACK USB Cable from the driver module. Your pixel array will backfeed the driver module via the JST plug. EG...
+
+<img src="https://github.com/leonyuhanov/WOWPixelDriver/blob/master/pics/extpower.jpg" width="900" />
+
 # Setting up your pixel map
 A template spreadsheet is provided [here](https://github.com/leonyuhanov/WOWPixelDriver/blob/master/Pixel%20Map%20Template.ods) This doc will focus on a simple matrix, but I'm adding more complex examples into the file as we go
 
